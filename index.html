@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+        body {
+            margin: 0;
+        }
+        .g-banner{
+            position: relative;
+            height: 600px;
+            overflow: hidden;
+        }
+        .g-banner .banner-anchor{
+            position: absolute;
+            top: 50%;
+            margin-top: -50px;
+            width: 80px;
+            height: 100px;
+            overflow: hidden;
+            opacity: 0;
+            text-indent: -90em;
+            background-image: url(http://static.mukewang.com/static/img/index/banner_sprite.png?1);
+            background-repeat: no-repeat;
+            transition: transform .6s, opacity .6s;
+        }
+        .g-banner .prev{
+            left: 0;
+            transform: translateX(-100%);
+            background-position: 0 -41px;
+        }
+        .g-banner .prev:hover,
+        .g-banner .next:hover{
+            opacity: 1;
+        }
+        .g-banner .prev:hover{
+            background-position: -81px -41px;
+        }
+        .g-banner .next{
+            right: 0;
+            transform: translateX(100%);
+            background-position: 0 -142px;
+        }
+        .g-banner .next:hover{
+            background-position: -81px -142px;
+        }
+        .g-banner:hover .banner-anchor{
+            transform: translateX(0);
+            opacity: 1;
+            visibility: visible;
+        }
+        .g-banner .banner-slide{
+            position: absolute;
+            display: none;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            background-repeat: no-repeat;
+            background-position: center 0;
+        }
+        .g-banner .banner-slide .more{
+            position: absolute;
+            right: 80px;
+            top: 360px;
+            height: 14px;
+            line-height: 14px;
+            padding-left: 21px;
+            font-weight: bold;
+            background: url(http://static.mukewang.com/static/img/index/banner_sprite.png?1) no-repeat -120px 0;
+        }
+        .g-banner .banner-slide .more:hover {
+            color: #14191e;
+            opacity: 0.75;
+            filter: alpha(opacity=75);
+        }
+        .animated {
+            -webkit-animation-duration: 1s;
+            animation-duration: 1s;
+            -webkit-animation-fill-mode: both;
+            animation-fill-mode: both;
+        }
+
+        .animated.infinite {
+            -webkit-animation-iteration-count: infinite;
+            animation-iteration-count: infinite;
+        }
+
+        .animated.hinge {
+            -webkit-animation-duration: 2s;
+            animation-duration: 2s;
+        }
+        @-webkit-keyframes tada {
+            0% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+
+            5%, 10% {
+                -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+                transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+            }
+
+            15%, 25%, 35%, 45% {
+                -webkit-transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, 3deg);
+                transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, 3deg);
+            }
+
+            20%, 30%, 40% {
+                -webkit-transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, -3deg);
+                transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, -3deg);
+            }
+
+            50% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        @keyframes tada {
+            0% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+
+            5%, 10% {
+                -webkit-transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+                transform: scale3d(.9, .9, .9) rotate3d(0, 0, 1, -3deg);
+            }
+
+            15%, 5%, 35%, 45% {
+                -webkit-transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, 3deg);
+                transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, 3deg);
+            }
+
+            20%, 30%, 40% {
+                -webkit-transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, -3deg);
+                transform: scale3d(1.2, 1.2, 1.2) rotate3d(0, 0, 1, -3deg);
+            }
+
+            50% {
+                -webkit-transform: scale3d(1, 1, 1);
+                transform: scale3d(1, 1, 1);
+            }
+        }
+
+        .tada {
+            -webkit-animation-name: tada;
+            animation-name: tada;
+        }
+        .banner-slide .festival{
+            position: absolute;
+            top: 450px;
+            right: 75px;
+        }
+        .banner-slide .festival a{
+            display: block;
+            width: 190px;
+            height: 120px;
+            background: url(http://www.imooc.com/static/img/index/festival.png) no-repeat 0 -120px;
+        }
+        .banner-slide .festival a:hover{
+            background-position: 0 0;
+        }
+        .g-banner .inner{
+            position: relative;
+            width: 1200px;
+            margin: 0 auto;
+        }
+        .g-banner .banner-dots{
+            position: absolute;
+            bottom: 30px;
+            left: 0;
+            right: 0;
+            text-align: center;
+        }
+        .g-banner .banner-dots span{
+            display: inline-block;
+            *display: inline;
+            *zoom: 1;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin: 0 5px;
+            background-color: #e3daef;
+            transition: transform .2s;
+            cursor: pointer;
+        }
+        .g-banner .banner-dots span:hover{
+            transform: scale(1.1);
+        }
+        .g-banner .banner-dots span.active{
+            background-color: #fff;
+            transform: scale(1.1);
+        }
+        .g-banner .click-help{
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+        }
+        .g-banner .banner-tit{
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="g-banner">
+    <div class="g-banner-content">
+        <div class="banner-slide" style="background-image: url(http://www.imooc.com/static/img/index/banner2.jpg)">
+            <a href="javascript:;" style="cursor: default" class="click-help"></a>
+            <div class="inner">
+                <h3 class="banner-tit"></h3>
+                <a href="javascript:void(0);" id="js-play-video" class="more">了解更多</a>
+            </div>
+        </div>
+        <div class="banner-slide" style="background-image: url(http://img.mukewang.com/566f79e20001a82e20000600.jpg);">
+            <a href="http://www.imooc.com/wenda/detail/302703" data-ast="bigbanner_1_168" class="click-help"></a>
+            <div class="inner">
+                <h3 class="banner-tit">圣诞开脑洞讲故事：以爱之名，代码传情！</h3>
+            </div>
+        </div>
+        <div class="banner-slide" style="background-image: url(http://img.mukewang.com/56724db600014d6e20000600.jpg);">
+            <a href="http://www.imooc.com/activity/salon20151210/index" data-ast="bigbanner_1_165" class="click-help"></a>
+            <div class="inner">
+                <h3 class="banner-tit">慕课网技术沙龙之前端专场</h3>
+            </div>
+        </div>
+        <div class="banner-slide" style="background-image: url(http://img.mukewang.com/566528db0001163220000600.jpg);">
+            <a href="http://www.imooc.com/wenda/detail/300876" data-ast="bigbanner_1_159" class="click-help"></a>
+            <div class="inner">
+                <h3 class="banner-tit">【问答牛人大比拼第一期】少侠，该你出手了！</h3>
+            </div>
+        </div>
+    </div>
+    <div class="banner-dots"></div>
+    <a href="javascript:;" class="banner-anchor prev" style="display: none">上一张</a>
+    <a href="javascript:;" class="banner-anchor next" style="display: none">下一张</a>
+</div>
+
+<script src="../assets/js/jquery-2.1.4.min.js"></script>
+<script>
+    // 首页轮播图-渐变
+    (function(){
+        var banner = $('.g-banner'),
+                slides = banner.find('.banner-slide'),
+                dotContainer = banner.find('.banner-dots'),
+                dotTpl = '',
+                dots,
+                total = slides.length,
+                index = -1,
+                duration = 500,
+                interval = 5000,
+                timer = null;
+
+        // 一张图 不执行轮播
+        if(total == 1) {
+            next();
+            return;
+        }
+
+        dotTpl = '<span></span>';
+
+        $.each(slides, function(i, el){
+            dotContainer.append(dotTpl);
+        });
+
+        dots = dotContainer.find('span');
+
+        function show(i){
+            var cur = slides.filter('.slide-active');
+
+            slides.stop(true, true);
+
+            cur.removeClass('slide-active').fadeOut(600);
+
+            slides.eq(i).addClass('slide-active').fadeIn(800);
+
+            dots && dots.removeClass('active').eq(i).addClass('active');
+        }
+        function prev(){
+            index--;
+
+            index = index < 0 ? total - 1 : index;
+
+            show(index);
+        }
+
+        function next(){
+            index++;
+            index = index > total - 1 ? 0 : index;
+
+            show(index);
+        }
+
+        function autoPlay(){
+            if(timer) clearInterval(timer);
+
+            timer = setInterval(function(){
+                next();
+            }, interval);
+        }
+
+        banner.find('.banner-anchor').removeAttr('style');
+
+        banner.on('click', '.prev', function(e){
+            prev();
+        }).on('click', '.next', function(e){
+            next();
+        }).on('click', '.banner-dots span', function(e){
+            if($(this).hasClass('active')) return;
+
+            var i = $(this).index();
+
+            index = i;
+
+            show(i);
+        });
+
+        banner.on('mouseenter', function(e){
+            if(timer) clearInterval(timer);
+        }).on('mouseleave', function(e){
+            autoPlay();
+        });
+
+        next();
+
+        autoPlay();
+
+    })();
+</script>
+</body>
+</html>
